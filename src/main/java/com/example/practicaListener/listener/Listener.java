@@ -1,0 +1,28 @@
+package com.example.practicaListener.listener;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionAttributeListener;
+import jakarta.servlet.http.HttpSessionListener;
+
+@WebListener
+public class Listener implements ServletContextListener, ServletRequestListener, HttpSessionListener {
+    private ServletContext servletContext;
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        sce.getServletContext().log("inicia la aplicación!");
+        servletContext = sce.getServletContext();
+        servletContext.setAttribute("mensaje", "Hola a todos desde la application!");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
+    @Override
+    public void requestInitialized(ServletRequestEvent sre) {
+        servletContext.log("inicializando el request!");
+        sre.getServletRequest().setAttribute("mensaje", "guardando algún valor para el request");
+    }
+}
